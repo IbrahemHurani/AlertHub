@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.alerthub</groupId>
-    <artifactId>NameOfmicroServices</artifactId>
+    <artifactId>UserMS</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>AlertHub</name>
     <description>AlertHub</description>
