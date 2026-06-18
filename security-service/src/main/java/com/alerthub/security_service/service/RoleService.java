@@ -1,5 +1,11 @@
 package com.alerthub.security_service.service;
 
+import java.util.HashSet;
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.alerthub.security_service.dto.request.AssignRoleRequest;
 import com.alerthub.security_service.dto.request.RevokeRoleRequest;
 import com.alerthub.security_service.dto.response.UserRoleResponse;
@@ -8,12 +14,8 @@ import com.alerthub.security_service.model.Role;
 import com.alerthub.security_service.model.User;
 import com.alerthub.security_service.repository.RoleRepository;
 import com.alerthub.security_service.repository.UserRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.HashSet;
+import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
@@ -63,17 +65,15 @@ public class RoleService {
     
     @Transactional(readOnly = true)
     public boolean userHasRole(Long userId, String permissionName) {
-        if ("READ_ALL".equalsIgnoreCase(permissionName)) {
-            return true;
+        if ("read".equalsIgnoreCase(permissionName)) {
+            return true;// all users have read permission
         }
 
-        User user = userRepository.findById(userId).orElse(null);
-        if (user == null) {
-            return false;
-        }
+        User user = userRepository.findById(userId).
+        orElseThrow(() -> new RuntimeException("User not found with id: " + userId));
         
         boolean isAdmin = user.getRoles().stream()
-                .anyMatch(role -> role.getName().equalsIgnoreCase("admin"));
+                .anyMatch(role -> role.getName().equalsIgnoreCase("admin")||role.getName().equalsIgnoreCase(permissionName));
         if (isAdmin) {
             return true;
         }
