@@ -39,4 +39,9 @@ public class UserController {
         userService.delete(id);
         return ResponseEntity.noContent().build();
     }
+    @PutMapping("/grantPermissions/{userId}")
+    ResponseEntity<UserResponseDTO> grantPermissions(@PathVariable Long userId,
+                                                     @Valid @RequestBody List<Long> permissionsIds) {
+        return new ResponseEntity<>(userService.grantPermissions(userId,permissionsIds), HttpStatus.OK);
+    }
 }

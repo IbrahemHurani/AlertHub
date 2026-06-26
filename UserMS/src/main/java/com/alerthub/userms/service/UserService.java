@@ -15,4 +15,8 @@ public interface UserService {
     UserResponseDTO update(Long id, UserRequestDTO dto);
 
     void delete(Long id);
+
+    UserResponseDTO grantPermissions(Long userId, List<Long> permissionsIds);
+
+    UserResponseDTO revokePermissions(Long userId, List<Long> permissionsIds);
 }

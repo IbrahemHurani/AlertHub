@@ -10,9 +10,11 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.List;
+
 @Getter
 @Setter
-@ToString
+@ToString(exclude = "roles")
 @Entity
 @Table(name = "users")
 public class User {
@@ -27,4 +29,11 @@ public class User {
     private Long phone;
 
     private String password;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+        name = "users_roles",
+        joinColumns = @JoinColumn(name = "user_id"),
+        inverseJoinColumns = @JoinColumn(name = "roles_id")
+    )
+    private List<Role> roles;
 }
