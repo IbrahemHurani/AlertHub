@@ -1,0 +1,38 @@
+[
+  {
+    "manager_id": "mgr001",
+    "projects": "ProjectAlpha",
+    "assignee": "dev001",
+    "label": "bug",
+    "devloper_id": "dev001",
+    "issue": 5,
+    "environment": "production",
+    "user_story": "US-101",
+    "point": 3,
+    "sprint": "Sprint-1"
+  },
+  {
+    "manager_id": "mgr001",
+    "projects": "ProjectAlpha",
+    "assignee": "dev002",
+    "label": "feature",
+    "devloper_id": "dev002",
+    "issue": 12,
+    "environment": "staging",
+    "user_story": "US-102",
+    "point": 5,
+    "sprint": "Sprint-1"
+  },
+  {
+    "manager_id": "mgr002",
+    "projects": "ProjectBeta",
+    "assignee": "dev003",
+    "label": "improvement",
+    "devloper_id": "dev003",
+    "issue": null,
+    "environment": "development",
+    "user_story": "US-103",
+    "point": null,
+    "sprint": "Sprint-2"
+  }
+]
