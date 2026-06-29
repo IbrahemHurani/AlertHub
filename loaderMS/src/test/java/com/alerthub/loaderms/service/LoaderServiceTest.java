@@ -1,24 +1,5 @@
 package com.alerthub.loaderms.service;
 
-import com.alerthub.loaderms.dto.ScannedFileResponseDto;
-import com.alerthub.loaderms.dto.ScanResultDto;
-import com.alerthub.loaderms.entity.PlatformInformation;
-import com.alerthub.loaderms.entity.ScannedFile;
-import com.alerthub.loaderms.repository.ScannedFileRepository;
-import com.alerthub.loaderms.service.impl.LoaderServiceImpl;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.jupiter.api.io.TempDir;
-import org.mockito.ArgumentCaptor;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
-import org.springframework.test.util.ReflectionTestUtils;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -26,8 +7,32 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.io.TempDir;
+import org.mockito.ArgumentCaptor;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyList;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.eq;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+import org.springframework.test.util.ReflectionTestUtils;
+
+import com.alerthub.loaderms.dto.ScanResultDto;
+import com.alerthub.loaderms.dto.ScannedFileResponseDto;
+import com.alerthub.loaderms.entity.PlatformInformation;
+import com.alerthub.loaderms.entity.ScannedFile;
+import com.alerthub.loaderms.repository.ScannedFileRepository;
+import com.alerthub.loaderms.service.impl.LoaderServiceImpl;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @ExtendWith(MockitoExtension.class)
 class LoaderServiceTest {
@@ -44,7 +49,7 @@ class LoaderServiceTest {
     @TempDir
     Path tempDir;
 
-    @SuppressWarnings("null")
+    @SuppressWarnings({"null", "unused"})
     @BeforeEach
     void setUp() {
         ReflectionTestUtils.setField(loaderService, "objectMapper", new ObjectMapper());
@@ -236,6 +241,7 @@ class LoaderServiceTest {
         assertThat(saved.getProvider()).isEqualTo("jira");
     }
 
+    @SuppressWarnings("null")
     @Test
     void getScanHistory_shouldReturnPaginatedResults() {
         List<ScannedFile> history = List.of(
