@@ -10,17 +10,25 @@ import lombok.NoArgsConstructor;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ClickUpDataDto {
 
-    private String owner_id;
+    @JsonProperty("owner_id")
+    private String ownerId;
     private String project;
     private String tag;
     private String label;
-    private String worker_id;
+
+    @JsonProperty("worker_id")
+    private String workerId;
+
     private Integer task;
-    private String pr_env;
-    private String user_story;
+
+    @JsonProperty("pr_env")
+    private String prEnv;
+
+    @JsonProperty("user_story")
+    private String userStory;
+
     private Integer day;
 
-    // @JsonProperty preserves the upstream typo as the JSON key while keeping the Java field name correct
     @JsonProperty("currant_sprint")
     private String currentSprint;
 }

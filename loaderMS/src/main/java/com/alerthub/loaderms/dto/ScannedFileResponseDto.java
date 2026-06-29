@@ -17,6 +17,7 @@ public class ScannedFileResponseDto {
     private boolean success;
     private int recordsLoaded;
 
+    @SuppressWarnings("null")
     public static ScannedFileResponseDto from(ScannedFile entity) {
         return ScannedFileResponseDto.builder()
                 .id(entity.getId())

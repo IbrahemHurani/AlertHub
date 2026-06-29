@@ -10,18 +10,21 @@ import lombok.NoArgsConstructor;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class GitHubDataDto {
 
-    private String manager_id;
+    @JsonProperty("manager_id")
+    private String managerId;
     private String projects;
     private String assignee;
     private String label;
 
-    // @JsonProperty preserves the upstream typo as the JSON key while keeping the Java field name correct
     @JsonProperty("devloper_id")
     private String developerId;
 
     private Integer issue;
     private String environment;
-    private String user_story;
+
+    @JsonProperty("user_story")
+    private String userStory;
+
     private Integer point;
     private String sprint;
 }

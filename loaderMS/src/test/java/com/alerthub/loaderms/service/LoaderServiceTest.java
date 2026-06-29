@@ -44,6 +44,7 @@ class LoaderServiceTest {
     @TempDir
     Path tempDir;
 
+    @SuppressWarnings("null")
     @BeforeEach
     void setUp() {
         ReflectionTestUtils.setField(loaderService, "objectMapper", new ObjectMapper());
@@ -94,6 +95,7 @@ class LoaderServiceTest {
         assertThat(result.getTotalRecordsLoaded()).isEqualTo(1);
         assertThat(result.getProcessedFiles()).contains("github_2024_01_01T00_00_00.json");
 
+        @SuppressWarnings("unchecked")
         ArgumentCaptor<List<PlatformInformation>> captor = ArgumentCaptor.forClass(List.class);
         verify(scanAuditService).saveRecordsAndAudit(captor.capture(), eq("github_2024_01_01T00_00_00.json"), eq("github"));
 
@@ -126,6 +128,7 @@ class LoaderServiceTest {
 
         loaderService.scanAllProviders();
 
+        @SuppressWarnings("unchecked")
         ArgumentCaptor<List<PlatformInformation>> captor = ArgumentCaptor.forClass(List.class);
         verify(scanAuditService).saveRecordsAndAudit(captor.capture(), anyString(), anyString());
 
@@ -185,6 +188,7 @@ class LoaderServiceTest {
 
         loaderService.scanAllProviders();
 
+        @SuppressWarnings("unchecked")
         ArgumentCaptor<List<PlatformInformation>> captor = ArgumentCaptor.forClass(List.class);
         verify(scanAuditService).saveRecordsAndAudit(captor.capture(), anyString(), eq("clickup"));
 
@@ -221,6 +225,7 @@ class LoaderServiceTest {
 
         loaderService.scanAllProviders();
 
+        @SuppressWarnings("unchecked")
         ArgumentCaptor<List<PlatformInformation>> captor = ArgumentCaptor.forClass(List.class);
         verify(scanAuditService).saveRecordsAndAudit(captor.capture(), anyString(), eq("jira"));
 
