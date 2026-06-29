@@ -1,5 +1,16 @@
 package com.alerthub.loaderms.service.impl;
 
+import java.io.File;
+import java.io.IOException;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
+
 import com.alerthub.loaderms.dto.ClickUpDataDto;
 import com.alerthub.loaderms.dto.GitHubDataDto;
 import com.alerthub.loaderms.dto.JiraDataDto;
@@ -12,19 +23,9 @@ import com.alerthub.loaderms.service.LoaderService;
 import com.alerthub.loaderms.service.ScanAuditService;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jakarta.annotation.PostConstruct;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
-import org.springframework.stereotype.Service;
-
-import java.io.File;
-import java.io.IOException;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -41,20 +42,8 @@ public class LoaderServiceImpl implements LoaderService {
 
     @Value("${loader.data.directory:data}")
     private String dataDirectory;
-
     // Fix #8: resolve relative path to absolute at startup so deployment location is unambiguous
-    @PostConstruct
-    void validateDataDirectory() {
-        File dir = new File(dataDirectory);
-        if (!dir.isAbsolute()) {
-            dataDirectory = dir.getAbsolutePath();
-        }
-        if (!dir.exists()) {
-            log.warn("Data directory does not exist: {}. No files will be scanned until it is created.", dataDirectory);
-        } else {
-            log.info("Loader data directory: {}", dataDirectory);
-        }
-    }
+
 
     // Fix #2: synchronized prevents scheduler and manual POST from running concurrently,
     // eliminating the TOCTOU window on the existsByFileNameAndProvider check.
