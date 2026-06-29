@@ -27,16 +27,18 @@ public class ScanAuditService {
      * Saves the parsed records and the success audit entry atomically.
      * REQUIRES_NEW ensures this transaction is independent of any outer transaction.
      */
+    @SuppressWarnings("null")
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public int saveRecordsAndAudit(List<PlatformInformation> records, String fileName, String provider) {
         platformInformationRepository.saveAll(records);
-        scannedFileRepository.save(ScannedFile.builder()
+        ScannedFile audit = ScannedFile.builder()
                 .fileName(fileName)
                 .provider(provider)
                 .scannedAt(LocalDateTime.now())
                 .success(true)
                 .recordsLoaded(records.size())
-                .build());
+                .build();
+        scannedFileRepository.save(audit);
         return records.size();
     }
 
@@ -44,14 +46,16 @@ public class ScanAuditService {
      * Saves a permanent failure audit entry in its own transaction so it always
      * commits regardless of any outer transaction state.
      */
+    @SuppressWarnings("null")
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void saveFailureAudit(String fileName, String provider) {
-        scannedFileRepository.save(ScannedFile.builder()
+        ScannedFile failureAudit = ScannedFile.builder()
                 .fileName(fileName)
                 .provider(provider)
                 .scannedAt(LocalDateTime.now())
                 .success(false)
                 .recordsLoaded(0)
-                .build());
+                .build();
+        scannedFileRepository.save(failureAudit);
     }
 }
